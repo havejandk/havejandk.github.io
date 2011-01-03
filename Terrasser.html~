@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<title>Havejan, Terrasser</title>
+<link rel="stylesheet" type="text/css" href="index.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="lib/jquery.fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="lib/css_browser_selector.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel/jquery.jcarousel.css" /> </head>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel/skins/tango/skin.css" /> </head>
+<link rel="stylesheet" type="text/css" href="skin.css" />
+</head>
+
+<body>
+<div class="pagelinks">
+<div class="first">
+<a class="first" href="index.html">Forside</a>
+</div>
+<div class="rest">
+<a href="Beplantning.html">Beplantning</a>
+<a href="Ild og Vand.html">Ild og Vand</a>
+<a href="Indkoersler.html">Indkørsler</a>
+<a href="Terraenmure.html">Terrænmure</a>
+<a href="Trapper.html">Trapper</a>
+<a href="Traearbejde.html">Træarbejde</a>
+<a href="Terrasser.html">Terrasser</a>
+</div>
+</div>
+
+<div id="top">
+<h1>Terrasser</h1>
+
+<ul id="imagelist" class="preview jcarousel-skin-tango">
+ <li class="group_li"><a href="album/Terrasser/001.jpg"><img src="thumb/Terrasser/001.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/002.jpg"><img src="thumb/Terrasser/002.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/003.jpg"><img src="thumb/Terrasser/003.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/004.jpg"><img src="thumb/Terrasser/004.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/005.jpg"><img src="thumb/Terrasser/005.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/006.jpg"><img src="thumb/Terrasser/006.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/007.jpg"><img src="thumb/Terrasser/007.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/008.jpg"><img src="thumb/Terrasser/008.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/009.jpg"><img src="thumb/Terrasser/009.jpg" /></a></li>
+ <li class="group_li"><a href="album/Terrasser/010.jpg"><img src="thumb/Terrasser/010.jpg" /></a></li>
+</ul>
+
+<script type="text/javascript" src="lib/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.fancybox-1.2.1.js"></script>
+<script type="text/javascript" src="lib/jquery.jcarousel/jquery.jcarousel.js"></script> 
+<script type="text/javascript" src="group.js"></script>
+<script type="text/javascript">
+$(document).ready(gallery);
+</script>
+
+</div>
+<div id="fullimage-container">
+</div>
+
+</body>
+</html>

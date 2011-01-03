@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<title>Havejan, Indkørsler</title>
+<link rel="stylesheet" type="text/css" href="index.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="lib/jquery.fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="lib/css_browser_selector.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel/jquery.jcarousel.css" /> </head>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel/skins/tango/skin.css" /> </head>
+<link rel="stylesheet" type="text/css" href="skin.css" />
+</head>
+
+<body>
+<div id="top">
+<h1>Indkørsler</h1>
+
+<ul id="imagelist" class="preview jcarousel-skin-tango">
+ <li class="group_li"><a href="album/Indkørsler/001.jpg"><img src="thumb/Indkørsler/001.jpg" /></a></li>
+ <li class="group_li"><a href="album/Indkørsler/002.jpg"><img src="thumb/Indkørsler/002.jpg" /></a></li>
+ <li class="group_li"><a href="album/Indkørsler/003.jpg"><img src="thumb/Indkørsler/003.jpg" /></a></li>
+ <li class="group_li"><a href="album/Indkørsler/004.jpg"><img src="thumb/Indkørsler/004.jpg" /></a></li>
+</ul>
+
+<script type="text/javascript" src="lib/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.fancybox-1.2.1.js"></script>
+<script type="text/javascript" src="lib/jquery.jcarousel/jquery.jcarousel.js"></script> 
+<script type="text/javascript" src="group.js"></script>
+<script type="text/javascript">
+$(document).ready(gallery);
+</script>
+
+</div>
+<div id="fullimage-container">
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+HERE="$(dirname ${PWD}/${0})"
+
+MOGRIF_ARGS="-auto-orient -quality 85 -interlace PLANE -format jpg"
+
+find_pictures() {
+  find "$@" -iregex '.*\.\(png\|jpe?g\|gif\)' -printf "%P\0" 
+}
+find_dirs() {
+  find "$@" -type d -printf "%P\0"
+}
+
+transform_dir() {
+    from_dir="$1"
+    shift
+    to_dir="$1"
+    shift
+    echo 1>&2 "Processing $to_dir"
+    find_dirs "$from_dir" | while read -d $'\0' d; do
+	mkdir -p "$to_dir/$d"
+    done
+    find_pictures "$from_dir" | while read -d $'\0' p; do
+	op="$to_dir/${p%%.*}.jpg"
+	echo 1>&2 "$op"
+	convert "$from_dir/$p" ${MOGRIF_ARGS} "$@" "$op"
+    done
+}
+
+transform_dirs() {
+  transform_dir "$HERE/orig" "$HERE/thumb" -colors 256 -depth 8 -thumbnail "120x90>"
+  transform_dir "$HERE/orig" "$HERE/album" -resize 1024
+}
+
+transform_dirs
+

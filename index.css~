@@ -1,0 +1,129 @@
+
+/*
+  brun:
+  341a0c
+  5b4328
+  c88443
+  c8b5a6
+
+  grøn:
+  164e14
+  04b604
+  90b690
+  d9e8d9
+*/
+body {
+    font-family: tahoma, helvetica, sans-serif;
+    background: #fff;
+    color: #341a0c;
+}
+span.HAVEJAN {
+    font-family: 'Maiandra GD', tahoma, helvetica, sans-serif;
+    font-weight: bold;
+}
+h1 { 
+    font-style: normal;
+    text-align: center;
+    font-size: 300%; 
+    color: #164e14; 
+    font-family: 'Maiandra GD', tahoma, helvetica, sans-serif;
+    padding: 0em;
+    margin: 0em;
+}
+h2 { 
+    text-align: center; 
+    padding: 0em;
+    margin: 0em;
+}
+.slogan { font-style: italic; }
+
+#center-img { 
+  width: 400px;
+  height: 300px;
+}
+
+/* cunning workaround for IE centering bug, thanks to
+   http://theodorakis.net/tablecentertest.html */ 
+div.center { 
+    width: 100%;
+    text-align: center; margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+} 
+img.center { 
+    text-align: center; margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+div.center table { margin: 0 auto; text-align: left; }
+
+ul.nomark {
+    list-style: none inside;
+    margin-left: 0px;
+}
+
+img.center {
+    display: block;
+}
+.vcenter {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+a:link { 
+    text-decoration: none;
+    color: #341a0c;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+ul.preview { 
+    margin: 0px;
+    margin-top: 1em;
+    padding: 0px;
+    text-align: center;
+    list-style: none inside;
+    font-weight: bolder;
+    display: block;
+}
+ul.preview li.group_li {
+    display: inline-block;
+}
+/* IE */
+html.ie6 ul.preview li.group_li {
+    display: inline;
+}
+html.ie7 ul.preview li.group_li {
+    display: inline;
+}
+
+ul.preview li.group_li {
+    width: 120px;
+    height: 110px;
+    margin: 0px 0px;
+    padding: 4px;
+    text-align: center;
+    border: 1px solid;
+    border-color: #aaa;
+    background: #f5f5f5;
+}
+ul.preview li.group_li a {
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+
+li.group_li a img { border: none; }
+
+.HardBreak
+{
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+.invisible {
+    display: none;
+}
+
+hr { clear: both; }
+

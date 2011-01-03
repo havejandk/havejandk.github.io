@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+<title>Havejan</title>
+<link rel="stylesheet" type="text/css" href="index.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="lib/jquery.fancybox/jquery.fancybox.css" media="screen" />
+<script type="text/javascript" src="lib/css_browser_selector.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jquery.jcarousel/jquery.jcarousel.css" /> </head>
+<link rel="stylesheet" type="text/css" href="skin.css" />
+</head>
+
+<body>
+<h1 class="preview_all">
+    Velkommen til <span class="HAVEJAN">HAVEJAN's</span> billedgalleri
+</h1>
+
+<h2 class="slogan preview_all">"Når din have ikke behøver ligne naboens"</h2>
+
+<div class="center">
+<table width="900px">
+  <tr>
+    <td width="30%">
+<div class="center">
+      <div class="center">
+        <img width="200px" src="fugl_rl.gif" />
+      </div>
+</div>
+    </td>
+    <td>
+      <div id="center-img" class="center">
+	<img class="preview_all" class="center" src="center-image.jpg" 
+	     width="400px" />
+      </div>
+    </td>
+    <td width="30%">
+<div class="card">
+<ul class="card nomark hardbreak">
+<li style="font-size: 1.7em; font-variant: small-caps;font-weight: bold;">Jan Ravnborg</li>
+<li>Faglært Anlægsgartner,</li>
+<li>Have- & landskabstekniker</li>
+<li>Telefon: 28 14 44 64</li>
+<li><a href="mailto:havejan@havejan.dk"</p>
+havejan@havejan.dk</a></li>
+</ul>
+</div>
+<p class="job">HAVEJAN udfører alt indenfor have- og anlægsarbejde, som f.eks. Beskæring, Træfældning, Stubfræsning, Hegn, Belægninger, Vandbassinner samt Græs- og Plantearbejde.</p>
+    </td>
+  </tr>
+</table>
+
+  <div>
+    <ul class="preview">
+      </li>
+      <li id="Beplantning" class="group_li">
+	Beplantning
+	<a href="Beplantning.html">
+	  <img title="Se flere beplantninger, klik her" src="thumb/Beplantning/001.jpg">
+        </a>
+      </li>
+      <li id="Ild og Vand" class="group_li">
+	Ild og Vand
+	<a  href="Ild og Vand.html">
+	  <img title="Ild og vand, klik for flere eksempler" src="thumb/Ild_og_Vand/001.jpg">
+	</a>
+      </li>
+      <li id="Indkørsler" class="group_li">
+	Indkørsler
+	<a href="Indkoersler.html">
+	  <img title="Klik her for flere fotos af indkørsler" src="thumb/Indkørsler/001.jpg">
+	</a>
+      </li>
+      <li id="Terrænmure" class="group_li">
+	Terrænmure
+	<a href="Terraenmure.html">
+	  <img title="Klik for flere mure" src="thumb/Terrænmure/001.jpg">
+	</a>
+      </li>
+      <li id="Trapper" class="group_li">
+	Trapper
+	<a href="Trapper.html">
+	  <img title="Tryk her for flere billeder af trapper" src="thumb/Trapper/001.jpg">
+	</a>
+      </li>
+      <li id="HegnOgTræarbejde" class="group_li">
+	Træarbejde
+	<a href="Traearbejde.html">
+	  <img title="Se mere træarbejde, bare klik" src="thumb/Hegn_og_Træarbejde/001.jpg">
+	</a>
+      </li>
+      <li id="Terrasser" class="group_li">
+	Terrasser
+	<a href="Terrasser.html">
+	  <img title="Klik for flere terrasser" src="thumb/Terrasser/001.jpg">
+	</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript" src="lib/jquery/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="lib/jquery.fancybox/jquery.fancybox-1.2.1.js"></script>
+<script type="text/javascript" src="lib/jquery.jcarousel/jquery.jcarousel.js"></script> 
+<script type="text/javascript" src="group.js"></script> 
+
+<script>
+function init() {
+  var thumb_re = /^thumb\//;
+  var target = $("#center-img");
+  var default_center_img = $("img", target);
+  function fix(i) {
+      var x = $(this);
+      var thumb_img = new Image();
+      var thumb_href = $("img", x).attr("src");
+      thumb_img.src = thumb_href;
+
+      var album_href = thumb_href.replace(thumb_re, "album/");
+      var node = $("<img>").attr({
+         "src": album_href,
+         "alt": "LOADING..."
+       });
+      var fi = fit_image;
+      node.fit_image = function() {
+        fi(node, 
+          target.width(), target.height(),
+          thumb_img.width, thumb_img.height);
+      };
+      node.fit_image();
+
+      function show() { 
+       node.fit_image();
+       target.empty().append(node);
+       node.fit_image();
+      }
+      function unshow() {
+       target.empty().append(default_center_img);
+      }
+      x.hover(show, unshow);
+  }
+  $("ul.preview > li > a").each(fix);
+}
+$(document).ready(init);
+</script>
+
+</body>
+</html>
+
