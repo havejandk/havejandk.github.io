@@ -16,7 +16,7 @@
     Velkommen til <span class="HAVEJAN">HAVEJAN's</span> billedgalleri
 </h1>
 
-<h2 class="slogan preview_all">"Når din have ikke behøver ligne naboens"</h2>
+<h2 class="slogan preview_all">"Vejen til en speciel have"</h2>
 
 <div class="center">
 <table width="900px">
@@ -110,6 +110,18 @@ function init() {
   var thumb_re = /^thumb\//;
   var target = $("#center-img");
   var default_center_img = $("img", target);
+  var register_vid = function() {
+    $(default_center_img).mouseover(function() {
+       target.empty().append(center_vid);
+    });
+  };
+  function unshow() {
+    target.empty().append(default_center_img);
+    register_vid();
+  }
+  register_vid();
+  var center_vid = $('<iframe width="400" height="233" src="http://www.youtube.com/embed/mhwZ5YUnkh4?rel=0&autoplay=1&loop=1" frameborder="0" allowfullscreen>');
+  
   function fix(i) {
       var x = $(this);
       var thumb_img = new Image();
@@ -133,9 +145,6 @@ function init() {
        node.fit_image();
        target.empty().append(node);
        node.fit_image();
-      }
-      function unshow() {
-       target.empty().append(default_center_img);
       }
       x.hover(show, unshow);
   }
