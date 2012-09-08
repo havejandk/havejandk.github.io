@@ -131,7 +131,7 @@ img.center {
     vertical-align: middle;
 }
 
-a:link { 
+a:link, a:visited { 
     text-decoration: none;
     color: #341a0c;
 }
