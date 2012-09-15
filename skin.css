@@ -1,36 +1,36 @@
 
-ul.preview .jcarousel-skin-group .jcarousel-container {
+#top ul.preview .jcarousel-skin-group .jcarousel-container {
 }
 
-ul.preview .jcarousel-skin-group .jcarousel-container-horizontal {
+#top ul.preview .jcarousel-skin-group .jcarousel-container-horizontal {
     width: 130px;
     height: 130px;
     padding: 0px 0px;
 }
 
-ul.preview .jcarousel-skin-group .jcarousel-clip-horizontal {
+#top ul.preview .jcarousel-skin-group .jcarousel-clip-horizontal {
     width:  130px;
     height: 120px;
 }
 
-ul.preview .jcarousel-skin-group .jcarousel-item {
+#top ul.preview .jcarousel-skin-group .jcarousel-item {
     width: 130px;
     height: 120px;
 }
 
-ul.preview .jcarousel-skin-ie7 .jcarousel-item:hover {
+#top ul.preview .jcarousel-skin-ie7 .jcarousel-item:hover {
     border-color: #808080;
 }
 
-ul.preview .jcarousel-skin-ie7 .jcarousel-item-horizontal {
+#top ul.preview .jcarousel-skin-ie7 .jcarousel-item-horizontal {
     margin-right: 7px;
 }
 
-ul.preview .jcarousel-skin-ie7 .jcarousel-item-vertical {
+#top ul.preview .jcarousel-skin-ie7 .jcarousel-item-vertical {
     margin-bottom: 7px;
 }
 
-ul.preview .jcarousel-skin-ie7 .jcarousel-item-placeholder {
+#top ul.preview .jcarousel-skin-ie7 .jcarousel-item-placeholder {
 }
 
 /**
