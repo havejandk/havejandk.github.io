@@ -57,7 +57,7 @@ ul.card { margin: 0px; padding: .5em; text-align: left;
 */
 body {
     font-family: tahoma, helvetica, sans-serif;
-    background: #fff;
+    background: rgba(186,223,185,0.62);
     color: #341a0c;
 }
 span.HAVEJAN {
@@ -134,6 +134,7 @@ img.center {
 a:link, a:visited { 
     text-decoration: none;
     color: #341a0c;
+    font-style: italic;
 }
 a:hover {
     text-decoration: underline;
