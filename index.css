@@ -63,6 +63,7 @@ body {
 span.HAVEJAN {
     font-family: 'Maiandra GD', tahoma, helvetica, sans-serif;
     font-weight: bold;
+    color: #164e14; 
 }
 h1 { 
     font-style: normal;
@@ -134,8 +135,11 @@ img.center {
 a:link, a:visited { 
     text-decoration: none;
     color: #341a0c;
+}
+.job a:link, .job a:visited {
     font-style: italic;
 }
+
 a:hover {
     text-decoration: underline;
 }
