@@ -170,42 +170,42 @@
 
     <script>
       function init() {
-      var thumb_re = /^thumb\//;
-      var target = $("#center-img");
-      var default_center_img = $("img", target);
-      function fix(i) {
-      var x = $(this);
-      var thumb_img = new Image();
-      var thumb_href = $("img", x).attr("src");
-      thumb_img.src = thumb_href;
+	  var thumb_re = /^thumb\//;
+	  var target = $("#center-img");
+	  var default_center_img = $("img", target);
+	  function fix(i) {
+	      var x = $(this);
+	      var thumb_img = new Image();
+	      var thumb_href = $("img", x).attr("src");
+	      thumb_img.src = thumb_href;
 
-      var album_href = thumb_href.replace(thumb_re, "album/");
-      var node = $("<img>").attr({
-        "src": album_href,
-        "alt": "LOADING..."
-	});
-	var fi = fit_image;
-	node.fit_image = function() {
-        fi(node, 
-        target.width(), target.height(),
-        thumb_img.width, thumb_img.height);
-	};
-	node.fit_image();
-
-	function show() { 
-	node.fit_image();
-	target.empty().append(node);
-	node.fit_image();
-	}
-	function unshow() {
-	target.empty().append(default_center_img);
-	}
-	x.hover(show, unshow);
-	}
-	$("ul.preview > li > a").each(fix);
-	}
-	$(document).ready(init);
-      </script>
+	      var album_href = thumb_href.replace(thumb_re, "album/");
+	      var node = $("<img>").attr({
+		  "src": album_href,
+		  "alt": "LOADING..."
+	      });
+	      var fi = fit_image;
+	      node.fit_image = function() {
+		  fi(node, 
+		     target.width(), target.height(),
+		     thumb_img.width, thumb_img.height);
+	      };
+	      node.fit_image();
+	      
+	      function show() { 
+		  node.fit_image();
+		  target.empty().append(node);
+		  node.fit_image();
+	      }
+	      function unshow() {
+		  target.empty().append(default_center_img);
+	      }
+	      x.hover(show, unshow);
+	  }
+	  $("ul.preview > li > a").each(fix);
+      }
+    $(document).ready(init);
+    </script>
 
     </body>
 </html>
