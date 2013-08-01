@@ -62,8 +62,16 @@
 	  </td>
 	  <td>
 	    <div id="center-img" class="center">
-	      <img class="preview_all" class="center" src="center-image.jpg" 
+	      <img class="preview_all center rotate" src="center-image.jpg" 
 		   width="400px" />
+	      <img class="rotate" src="album/Terrænmure/004.jpg" />
+	      <img class="rotate" src="album/Beplantning/001.jpg" />
+	      <img class="rotate" src="album/Ild_og_Vand/001.jpg" />
+	      <img class="rotate" src="album/Indkørsler/003.jpg" />
+	      <img class="rotate" src="album/Terrænmure/010.jpg" />
+	      <img class="rotate" src="album/Trapper/001.jpg" />
+	      <img class="rotate" src="album/Terrasser/002.jpg" />
+	      <img class="rotate" src="album/Terrasser/005.jpg" />
 	    </div>
 	  </td>
 	  <td width="30%">
@@ -169,6 +177,40 @@
     <script type="text/javascript" src="group.js"></script> 
 
     <script>
+    function rotate(args) {
+        var options = {
+    	  'items': [],
+    	  'fadeTime': 1000,
+    	  'intervalTime': 5000,
+    	  'currentItem': null,
+    	  'onFadeIn': null,
+	  'inhibit': null,
+	  'defaultLoopIntervalMillisecs': 3000,
+    	  };
+	options.currentItem = args.currentItem || args.items[0];
+        options = $.extend(options, args);
+        var currentIndex = 0;
+        var next = function() {
+    	  if (null == options.inhibit  || !options.inhibit()) {
+    	      if (options.currentItem)
+    		  $(options.currentItem).fadeOut(options.fadeTime);
+    	      currentIndex = (currentIndex+1) % options.items.length;
+    	      options.currentItem = options.items[currentIndex % options.items.length];
+    	      if (options.currentItem) {
+    		  if ( options.onFadeIn )
+    		      options.onFadeIn(options);
+    		  $(options.currentItem).fadeIn(options.fadeTime);
+    	      }
+    	  }
+        };
+	var loop = function(millisec) {
+	    options.loopId = setInterval(next, millisec || options.defaultLoopIntervalMillisecs);
+	    return options.loopId;
+	}
+        //return var setInterval(next, options.intervalTime);
+        return { 'next': next, 'options': options, 'loop': loop };
+    };
+
       function init() {
 	  var thumb_re = /^thumb\//;
 	  var target = $("#center-img");
@@ -177,6 +219,17 @@
 
 	  var on_over = $("<div>").attr("id", "album_mouseover");
 
+	  function setup_rotate() {
+	      var items = $("img.rotate", target);
+	      var rot = rotate({
+		  'items': items,
+		  'onFadeIn': function(options) {
+		      fit_image(options.currentItem, target.width(), target.height());
+		  }});
+	      return rot;
+	  }
+
+	  
 	  function fix_show_album_on_mouseover(i) {
 	      var x = $(this);
 	      var thumb_img = new Image();
@@ -215,6 +268,8 @@
 	      }
 	      x.hover(show, unshow);
 	  }
+	  document.rotation = setup_rotate();
+	  document.rotation.loop();
 	  $("ul.preview > li > a").each(fix_show_album_on_mouseover);
 	  target.append(on_over);
       }
