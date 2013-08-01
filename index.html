@@ -173,7 +173,7 @@
 	  var thumb_re = /^thumb\//;
 	  var target = $("#center-img");
 	  var default_center_img = $("img", target);
-	  function fix(i) {
+	  function fix_show_album_on_mouseover(i) {
 	      var x = $(this);
 	      var thumb_img = new Image();
 	      var thumb_href = $("img", x).attr("src");
@@ -202,7 +202,7 @@
 	      }
 	      x.hover(show, unshow);
 	  }
-	  $("ul.preview > li > a").each(fix);
+	  $("ul.preview > li > a").each(fix_show_album_on_mouseover);
       }
     $(document).ready(init);
     </script>
