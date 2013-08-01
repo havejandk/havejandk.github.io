@@ -172,6 +172,8 @@ html.ie7 ul.preview li.group_li {
     display: inline;
 }
 
+ul.selection li:hover { opacity: .5; }
+
 ul.preview li.group_li {
     width: 120px;
     height: 110px;
