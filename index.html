@@ -172,7 +172,11 @@
       function init() {
 	  var thumb_re = /^thumb\//;
 	  var target = $("#center-img");
-	  var default_center_img = $("img", target);
+	  var default_center_img = $("> img", target);
+	  var fadeTime = 400;
+
+	  var on_over = $("<div>").attr("id", "album_mouseover");
+
 	  function fix_show_album_on_mouseover(i) {
 	      var x = $(this);
 	      var thumb_img = new Image();
@@ -180,10 +184,18 @@
 	      thumb_img.src = thumb_href;
 
 	      var album_href = thumb_href.replace(thumb_re, "album/");
-	      var node = $("<img>").attr({
-		  "src": album_href,
-		  "alt": "LOADING..."
-	      });
+	      var node = $("<img>")
+		  .attr({
+		      "src": album_href,
+		      "alt": "LOADING..."
+		  })
+		  .css({
+		      "display": "none",
+		      "position": "absolute",
+		      "top": 0,
+		      "left": 0
+		  });
+	      
 	      var fi = fit_image;
 	      node.fit_image = function() {
 		  fi(node, 
@@ -191,18 +203,20 @@
 		     thumb_img.width, thumb_img.height);
 	      };
 	      node.fit_image();
+	      on_over.append(node);
 	      
 	      function show() { 
 		  node.fit_image();
-		  target.empty().append(node);
+		  node.fadeIn(fadeTime);
 		  node.fit_image();
 	      }
 	      function unshow() {
-		  target.empty().append(default_center_img);
+		  node.fadeOut(fadeTime);
 	      }
 	      x.hover(show, unshow);
 	  }
 	  $("ul.preview > li > a").each(fix_show_album_on_mouseover);
+	  target.append(on_over);
       }
     $(document).ready(init);
     </script>

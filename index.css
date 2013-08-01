@@ -83,12 +83,19 @@ h2 {
 .slogan { font-style: italic; }
 
 #center-img { 
+  position: relative;
   width: 400px;
   height: 300px;
 }
 
 .job{
     font-size: 80%;
+}
+
+.rotate {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* cunning workaround for IE centering bug, thanks to
