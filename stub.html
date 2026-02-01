@@ -27,8 +27,15 @@ textarea,
 a {
   font-size: 1rem;               /* will be 18.75px on mobile */
   min-height: 44px;              /* very important for touch targets */
-  padding: 0.6em 1em;
+  padding: 0.5em 1em;
   touch-action: manipulation; /* better mobile feel */
+}
+
+button {
+    min-width: 1.5em;
+}
+input {
+    min-width: auto;
 }
 
 body {
@@ -38,10 +45,23 @@ body * {
     font-size: inherit;
 }
 table:has(#price_estimate) {
+    width: 100%;
     border-collapse: collapse;
 }
+table:has(#price_estimate) tr th,
+table:has(#price_estimate) tr td{
+    border-bottom: 2px solid #00000050;
+}
+tr.total {
+    padding: 5px;
+    margin: 10px;
+    background: #00FF0010;
+}
+tr.total {
+    font-weight: bold;
+}
 #price_estimate > .total {
-    border-bottom: double black;
+    border-bottom: 5px double black;
 }
 #price_estimate tr td:nth-child(1) {
     text-align: left;
@@ -49,25 +69,18 @@ table:has(#price_estimate) {
 #price_estimate tr td {
     text-align: right;
 }
-td.sub, td#total {
-    text-align: right;
-}
-.columns {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1rem;
-}
-.columns > * {
-    flex: 1 1 20rem;
-}
-.th {
-    text-align: center;
-}
+
 .nowrap {
     display: flex;
     flex-wrap: nowrap;
 }
+.td {
+    width: auto;
+}
+.padbox {
+    padding: 2em;
+}
+
   </style>
 
   <body>
@@ -78,35 +91,46 @@ td.sub, td#total {
 
     <template id="stump_template">
         <tr>
-            <td>🪵Stub</td>
+            <td style="flex: 1 1 auto; min-width: 8em;">🪵Stub</td>
             <td class="nowrap">
-                <input type="number" value="10" min="10" max="100" step="1" class="diag" />
-                <button onclick="diag_change(this, 1)">+</button>
                 <button onclick="diag_change(this, -1)">-</button>
+                <input type="number" value="10" min="10" max="100" step="1" class="diag" style="width: 2em;" />
+                <button onclick="diag_change(this, 1)">+</button>
             </td>
-            <td class="stump sub"></td>
-            <td><button onclick="removeStump(this)" >🗑</button></td>
+            <td class="stump sub" style="min-width: 6em; max-width: 8em;"></td>
+            <td style="width: 2em;"><button onclick="removeStump(this)" >🗙</button></td>
         </tr>
     </template>
 
-    <div class="columns">
-    <table>
+    <div style="display: grid">
+    <div class="padbox" style="min-width: 40%;">
+
+    <table style="min-width: 40%;max-width: 25em;">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col" style="min-width: 10em;">Diameter<br>(cm)</th>
+                <th scope="col">Pris<br>(dkk)</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
         <tbody id="price_estimate">
-            <tr><th></th><th>Diameter<br>(cm)</th><th>Pris<br>(dkk)</th></tr>
             <tr class="total">
                 <td>Total</td>
                 <td></td>
                 <td id="total"></td>
-                <td colspan=""><button onclick="addStump()">+</button></td>
+                <td><button onclick="addStump()">+</button></td>
             </tr>
             <tr id="insert_stump_point"></tr>
             <tr>
                 <td>Opstart</td>
                 <td></td>
                 <td class="sub">320</td>
+                <td></td>
             </tr>
         </tbody>
     </table>
+    </div>
 
     <div>
         <img src="e7c19feb-e7c8-4ea0-8c3e-9e1aef3802ae.jpg" width="auto"/>
@@ -228,6 +252,7 @@ td.sub, td#total {
             const newValue = current + val;
             diagSet(input, newValue);
             setPrice(line);
+            updateTotal();
         }
         function updateCost() {
             const stump_diags = document.querySelectorAll(".diag")
@@ -241,6 +266,7 @@ td.sub, td#total {
         };
         function init() {
             init_updateListener();
+            addStump();
         };
         document.addEventListener('DOMContentLoaded', init);
     </script>
