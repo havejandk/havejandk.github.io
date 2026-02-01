@@ -1,0 +1,165 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Havejan Stubfræsning</title>
+  </head>
+  <style>
+    input.diag {
+        display: inline-flex;
+        align-items: right;
+        border: none;
+        direction: rtl;
+    }
+  </style>
+
+  <body>
+
+    <h1>
+        Stubfræsning
+    </h1>
+
+    <template id="stump_template">
+        <tr>
+            <td>🪵Stub</td>
+            <td><input type="number" value="10" min="10" max="100" step="1" class="diag" /></td>
+            <td class="stump sub"></td>
+            <td><button onclick="removeStump(this)" >⌫</button></td>
+        </tr>
+    </template>
+
+    <table>
+        <tbody id="price_estimate">
+            <tr><th>Linje</th><th>Diameter (cm)</th><th>Pris (dkk)</th></tr>
+            <tr class="total">
+                <td>Total</td>
+                <td></td>
+                <td id="total"></td>
+                <td colspan=""><button onclick="addStump()">+</button></td>
+            </tr>
+            <tr id="insert_stump_point">
+                <td>Opstart</td>
+                <td></td>
+                <td class="sub">320</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+    <script>
+        min_diag = 10
+
+        function makeParseFloatLocal(locale = undefined) {
+            const formatter = Intl.NumberFormat(locale);
+            const groupSep = formatter.format(111111).replace(/\p{Number}/gu, '');
+            const decimalSep = formatter.format(1.1).replace(/\p{Number}/gu, '');
+            replaceGroupSep = groupSep == '' ? null : new RegExp(`\\${groupSep}`, 'g');
+            replaceDecimalSep = decimalSep == '' ? null : new RegExp(`\\${decimalSep}`);
+            if (replaceGroupSep == null)
+                if ( replaceDecimalSep == null )
+                    return parseFloat;
+                else
+                    return (str => parseFloat(str.replace(replaceDecimalSep, '.')));
+            else if (replaceDecimalSep == null )
+                return (str => parseFloat(str.replace(replaceGroupSep, '')));
+            else
+                return (str => parseFloat(str.replace(replaceGroupSep, '').replace(replaceDecimalSep, '.')))
+        }
+        parseFloatLocal = makeParseFloatLocal();
+        function textMoney(value) {
+            if (isNaN(value) || value === undefined || value == null || value < 0 || value > 1000000)
+                return "FEJL";
+            return value.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+        function diagNode(node) {
+            if (node.classList.contains("diag"))
+                return node;
+            return node.querySelector(".diag");
+        }
+        function diag(node) {
+            const v = diagNode(node).value;
+            const d = parseFloatLocal(v);
+            if (d < 10)
+                return 10;
+            if (d > 500)
+                return 500;
+            return d;
+        }
+        function subNode(node) {
+            if (node.classList.contains("sub"))
+                return node;
+            return node.querySelector(".sub");
+        }
+        function setPrice(node) {
+            const d = diag(node)
+            const price = d * d * 5
+            subNode(node).textContent = textMoney(price);
+        }
+        function priceEstimateNode() {
+            return document.querySelector("#price_estimate");
+        }
+
+        function init_updateListener() {
+            const table = document.querySelector("#price_estimate");
+            function inputEventListener(event) {
+                const target = event.target
+                if (target.classList.contains("diag")) {
+                    setPrice(target.closest("tr"));
+                    updateTotal();
+                }
+            }
+            function isNodeAddedOrRemoved(mutationEvent) {
+                if  (mutationEvent.type != 'childList')
+                    return false;
+                if (mutationEvent.addedNodes.length > 0)
+                    return true;
+                if (mutationEvent.removedNodes.length > 0)
+                    return true;
+                return false;
+            }
+            function isNodesAddedOrRemoved(mutationList) {
+                for (const i in mutationList)
+                    if (isNodeAddedOrRemoved(mutationList[i]))
+                        return true;
+                return false;
+            }
+
+            function priceRowAddition(mutationList) {
+                if (!isNodesAddedOrRemoved(mutationList))
+                    return;
+                mutationList.forEach(e => e.addedNodes.forEach(updateCost))
+                updateTotal();
+            }
+            const priceRowAdditionObserver = new MutationObserver(priceRowAddition);
+            priceRowAdditionObserver.observe(priceEstimateNode(), { childList: true });
+            table.addEventListener('input', inputEventListener);
+        }
+        
+        function addStump() {
+            const template = document.querySelector("#stump_template").content.cloneNode(true)
+            const anchor = document.querySelector("#insert_stump_point");
+            anchor.parentNode.insertBefore(template, anchor.nextSibling);
+        };
+        function removeStump(node) {
+            node.closest("tr").remove();
+        }
+        function updateCost() {
+            const stump_diags = document.querySelectorAll(".diag")
+            return stump_diags.forEach(node => setPrice(node.closest("tr")))
+        }
+        function updateTotal() {
+            const total = [...document.querySelectorAll('.sub')]
+                        .map(el => parseFloatLocal(el.textContent) )
+                        .reduce((acc, val) => acc + val, 0);
+            document.getElementById("total").textContent = textMoney(total)
+        };
+        function init() {
+            init_updateListener();
+        };
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</html>
+
