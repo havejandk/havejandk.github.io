@@ -5,18 +5,51 @@
     <title>Havejan Stubfræsning</title>
   </head>
   <style>
-    input.diag {
-        display: inline-flex;
-        align-items: right;
-        border: none;
-        direction: rtl;
-    }
+input.diag {
+    display: inline-flex;
+    align-items: right;
+    border: none;
+    direction: rtl;
+    font-size: inherit;
+}
+button {
+    font-size: inherit;
+}
+table:has(#price_estimate) {
+    border-collapse: collapse;
+}
+#price_estimate > .total {
+    border-bottom: double black;
+}
+#price_estimate tr td:nth-child(1) {
+    text-align: left;
+}
+#price_estimate tr td {
+    text-align: right;
+}
+td.sub, td#total {
+    text-align: right;
+}
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1em;
+}
+.columns > * {
+    flex: 1 1 20em;
+    padding: 15px;
+}
+.th {
+    text-align: center;
+}
+
   </style>
 
   <body>
 
     <h1>
-        Stubfræsning
+        Overslag på Stubfræsning
     </h1>
 
     <template id="stump_template">
@@ -24,26 +57,33 @@
             <td>🪵Stub</td>
             <td><input type="number" value="10" min="10" max="100" step="1" class="diag" /></td>
             <td class="stump sub"></td>
-            <td><button onclick="removeStump(this)" >⌫</button></td>
+            <td><button onclick="removeStump(this)" >🗑</button></td>
         </tr>
     </template>
 
+    <div class="columns">
     <table>
         <tbody id="price_estimate">
-            <tr><th>Linje</th><th>Diameter (cm)</th><th>Pris (dkk)</th></tr>
+            <tr><th></th><th>Diameter<br>(cm)</th><th>Pris<br>(dkk)</th></tr>
             <tr class="total">
-                <td>Total</td>
-                <td></td>
-                <td id="total"></td>
+                <td style="min-width: 6em; max-width: 8em;">Total</td>
+                <td style="min-width: 4em; max-width: 8em;"></td>
+                <td style="min-width: 4em; max-width: 8em;" id="total"></td>
                 <td colspan=""><button onclick="addStump()">+</button></td>
             </tr>
-            <tr id="insert_stump_point">
+            <tr id="insert_stump_point"></tr>
+            <tr>
                 <td>Opstart</td>
                 <td></td>
                 <td class="sub">320</td>
             </tr>
         </tbody>
     </table>
+
+    <div>
+        <img src="e7c19feb-e7c8-4ea0-8c3e-9e1aef3802ae.jpg" width="auto"/>
+    </div>
+    </div>
 </body>
 
     <script>
@@ -70,8 +110,8 @@
             if (isNaN(value) || value === undefined || value == null || value < 0 || value > 1000000)
                 return "FEJL";
             return value.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
             });
         }
         function diagNode(node) {
