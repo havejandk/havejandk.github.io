@@ -10,8 +10,15 @@ input.diag {
     align-items: right;
     border: none;
     direction: rtl;
-    font-size: inherit;
+    appearance: textfield;
+    -moz-appearance: textfield; /* hide Firefox arrows */
 }
+
+input.diag::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;  
+}
+
 /* Make sure buttons, inputs etc. stay finger-friendly */
 button,
 input,
@@ -21,6 +28,14 @@ a {
   font-size: 1rem;               /* will be 18.75px on mobile */
   min-height: 44px;              /* very important for touch targets */
   padding: 0.6em 1em;
+  touch-action: manipulation; /* better mobile feel */
+}
+
+body {
+    font-size: 400%;
+}
+body * {
+    font-size: inherit;
 }
 table:has(#price_estimate) {
     border-collapse: collapse;
@@ -49,7 +64,6 @@ td.sub, td#total {
 .th {
     text-align: center;
 }
-
   </style>
 
   <body>
@@ -61,7 +75,11 @@ td.sub, td#total {
     <template id="stump_template">
         <tr>
             <td>🪵Stub</td>
-            <td><input type="number" value="10" min="10" max="100" step="1" class="diag" /></td>
+            <td>
+                <input type="number" value="10" min="10" max="100" step="1" class="diag" />
+                <button onclick="diag_change(this, 1)">+</button>
+                <button onclick="diag_change(this, -1)">-</button>
+            </td>
             <td class="stump sub"></td>
             <td><button onclick="removeStump(this)" >🗑</button></td>
         </tr>
@@ -72,9 +90,9 @@ td.sub, td#total {
         <tbody id="price_estimate">
             <tr><th></th><th>Diameter<br>(cm)</th><th>Pris<br>(dkk)</th></tr>
             <tr class="total">
-                <td style="min-width: 6em; max-width: 8em;">Total</td>
-                <td style="min-width: 4em; max-width: 8em;"></td>
-                <td style="min-width: 4em; max-width: 8em;" id="total"></td>
+                <td style="min-width: 6em;">Total</td>
+                <td style="min-width: 4em;"></td>
+                <td style="min-width: 4em;" id="total"></td>
                 <td colspan=""><button onclick="addStump()">+</button></td>
             </tr>
             <tr id="insert_stump_point"></tr>
@@ -93,7 +111,7 @@ td.sub, td#total {
 </body>
 
     <script>
-        min_diag = 10
+        min_diag = 10;
 
         function makeParseFloatLocal(locale = undefined) {
             const formatter = Intl.NumberFormat(locale);
@@ -110,7 +128,7 @@ td.sub, td#total {
                 return (str => parseFloat(str.replace(replaceGroupSep, '')));
             else
                 return (str => parseFloat(str.replace(replaceGroupSep, '').replace(replaceDecimalSep, '.')))
-        }
+        };
         parseFloatLocal = makeParseFloatLocal();
         function textMoney(value) {
             if (isNaN(value) || value === undefined || value == null || value < 0 || value > 1000000)
@@ -119,13 +137,20 @@ td.sub, td#total {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0
             });
-        }
+        };
         function diagNode(node) {
             if (node.classList.contains("diag"))
                 return node;
             return node.querySelector(".diag");
-        }
-        function diag(node) {
+        };
+        function diagSet(node, val) {
+            const dnode = diagNode(node);
+            if ( dnode === undefined)
+                return;
+            dnode.value = textMoney(val);
+            return node;
+        };
+        function diagValue(node) {
             const v = diagNode(node).value;
             const d = parseFloatLocal(v);
             if (d < 10)
@@ -133,25 +158,25 @@ td.sub, td#total {
             if (d > 500)
                 return 500;
             return d;
-        }
+        };
         function subNode(node) {
             if (node.classList.contains("sub"))
                 return node;
             return node.querySelector(".sub");
-        }
+        };
         function setPrice(node) {
-            const d = diag(node)
-            const price = d * d * 5
+            const d = diagValue(node);
+            const price = d * d * 5;
             subNode(node).textContent = textMoney(price);
-        }
+        };
         function priceEstimateNode() {
             return document.querySelector("#price_estimate");
-        }
+        };
 
         function init_updateListener() {
             const table = document.querySelector("#price_estimate");
             function inputEventListener(event) {
-                const target = event.target
+                const target = event.target;
                 if (target.classList.contains("diag")) {
                     setPrice(target.closest("tr"));
                     updateTotal();
@@ -182,15 +207,23 @@ td.sub, td#total {
             const priceRowAdditionObserver = new MutationObserver(priceRowAddition);
             priceRowAdditionObserver.observe(priceEstimateNode(), { childList: true });
             table.addEventListener('input', inputEventListener);
-        }
+        };
         
         function addStump() {
-            const template = document.querySelector("#stump_template").content.cloneNode(true)
+            const template = document.querySelector("#stump_template").content.cloneNode(true);
             const anchor = document.querySelector("#insert_stump_point");
             anchor.parentNode.insertBefore(template, anchor.nextSibling);
         };
         function removeStump(node) {
             node.closest("tr").remove();
+        }
+        function diag_change(node, val) {
+            const line = node.closest("tr");
+            const input = diagNode(line);
+            const current = diagValue(input);
+            const newValue = current + val;
+            diagSet(input, newValue);
+            setPrice(line);
         }
         function updateCost() {
             const stump_diags = document.querySelectorAll(".diag")
