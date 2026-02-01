@@ -12,8 +12,15 @@ input.diag {
     direction: rtl;
     font-size: inherit;
 }
-button {
-    font-size: inherit;
+/* Make sure buttons, inputs etc. stay finger-friendly */
+button,
+input,
+select,
+textarea,
+a {
+  font-size: 1rem;               /* will be 18.75px on mobile */
+  min-height: 44px;              /* very important for touch targets */
+  padding: 0.6em 1em;
 }
 table:has(#price_estimate) {
     border-collapse: collapse;
@@ -34,11 +41,10 @@ td.sub, td#total {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    gap: 1em;
+    gap: 1rem;
 }
 .columns > * {
-    flex: 1 1 20em;
-    padding: 15px;
+    flex: 1 1 20rem;
 }
 .th {
     text-align: center;
