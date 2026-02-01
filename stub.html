@@ -32,7 +32,7 @@ a {
 }
 
 body {
-    font-size: 400%;
+    font-size: 150%;
 }
 body * {
     font-size: inherit;
@@ -64,6 +64,10 @@ td.sub, td#total {
 .th {
     text-align: center;
 }
+.nowrap {
+    display: flex;
+    flex-wrap: nowrap;
+}
   </style>
 
   <body>
@@ -75,7 +79,7 @@ td.sub, td#total {
     <template id="stump_template">
         <tr>
             <td>🪵Stub</td>
-            <td>
+            <td class="nowrap">
                 <input type="number" value="10" min="10" max="100" step="1" class="diag" />
                 <button onclick="diag_change(this, 1)">+</button>
                 <button onclick="diag_change(this, -1)">-</button>
@@ -90,9 +94,9 @@ td.sub, td#total {
         <tbody id="price_estimate">
             <tr><th></th><th>Diameter<br>(cm)</th><th>Pris<br>(dkk)</th></tr>
             <tr class="total">
-                <td style="min-width: 6em;">Total</td>
-                <td style="min-width: 4em;"></td>
-                <td style="min-width: 4em;" id="total"></td>
+                <td>Total</td>
+                <td></td>
+                <td id="total"></td>
                 <td colspan=""><button onclick="addStump()">+</button></td>
             </tr>
             <tr id="insert_stump_point"></tr>
