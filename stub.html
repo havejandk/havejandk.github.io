@@ -242,7 +242,7 @@ Del fra din mobil til
             function updateBodies() {
                 body = calculateBody();
                 bodyEncoded = encodeURIComponent(body);
-                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}=${bodyEncoded}`);
+                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}body=${bodyEncoded}`);
             };
             return updateBodies;
         }
