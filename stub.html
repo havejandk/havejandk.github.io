@@ -1,7 +1,9 @@
 <!doctype html>
 
-<html>
+<html lang="dk">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
     <title>Havejan Stubfræsning</title>
   </head>
   <style>
@@ -154,7 +156,9 @@ body.share-unsupported .share {
                 <li>Tilføj stubbe ved at trykke "+" og taste målene</li>
                 <li>Kontakt Havejan, enten med:
                     <ul class="li-buttons">
-                        <li><a href="sms:+4528144464" id="sms">💬 Send SMS til 28 14 44 64</a></li>
+                        <li><a href="mailto:jan@havejan.dk" id="stub-email">Email til jan@havejan.dk</a></li>
+                        <li><a href="sms:+4528144464" id="stub-sms">💬 Send SMS til 28 14 44 64</a></li>
+                        <li><a href="tel:+4528144464">📞Ring 28 14 44 64</a></li>
                         <li class="share"><button onclick="share(this)">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="18" cy="5" r="3"></circle>
@@ -166,7 +170,6 @@ body.share-unsupported .share {
 Del via Web Share
 </a>
                         </li>
-                        <li><a href="tel:+4528144464">📞Ring 28 14 44 64</a></li>
                     </ul>
                 </li>
             </ol>
@@ -177,6 +180,7 @@ Del via Web Share
     <script>
         const min_diag = 10;
         const phoneNumber = "+4528144464";
+        const email = 'jan@havejan.dk';
 
         function makeParseFloatLocal(locale = undefined) {
             const formatter = Intl.NumberFormat(locale);
@@ -237,24 +241,24 @@ Del via Web Share
         function priceEstimateNode() {
             return document.querySelector("#price_estimate");
         };
-        function calculateBody() {
+        function calculateMessage() {
             const stubs = [...document.querySelectorAll(".diag")];
             const count = stubs.length;
             const diagList = stubs
                 .map(x => `${x.value}cm`)
                 .reduce((acc, val) => `${acc}\n${val}`);
-            const msg = `Stubfræsning: #${count}\n${diagList}`;
+            const msg = {
+                'subject': `Stubfraesning af ${count} stubbe`,
+                'shortBody': diagList,
+                'body': `Hej Havejan, Jeg vil gerne kontaktes om ${count} stubbe:\n${diagList}`
+            };
             return msg;
-        }
+        };
         async function share(node) {
-            const stubs = [...document.querySelectorAll(".diag")];
-            const count = stubs.length;
-            const diagList = stubs
-                .map(x => `${x.value}cm`)
-                .reduce((acc, val) => `${acc}\n${val}`);
+            msg = calculateMessage();
             const shareData = {
-                title: `Stubfræsning af ${count} stubbe`,
-                text: `Hej Havejan. Jeg har ${count} stubbe jeg gerne vil have fræset. Jeg har selv målt dem til: ${diagList}`
+                title: msg.subject,
+                text: msg.body
             };
             try {
                 await navigator.share(shareData);
@@ -263,16 +267,14 @@ Del via Web Share
             }
 
         }
-        function updateBody(node, encodedText) {
-            node.setAttribute('href', encodedText);
-        }
         function makeUpdateBodies() {
-            smsNode = document.querySelector("#sms");
+            smsNode = document.querySelector("#stub-sms");
+            emailNode = document.querySelector("#stub-email");
             const separator = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? '&' : '?';
             function updateBodies() {
-                body = calculateBody();
-                bodyEncoded = encodeURIComponent(body);
-                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}body=${bodyEncoded}`);
+                msg = calculateMessage();
+                emailNode.setAttribute('href', `mailto:${email}?subject=${encodeURIComponent(msg.subject)}&body=${encodeURIComponent(msg.body)}`);
+                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}body=${encodeURIComponent(`${msg.subject}: ${msg.shortBody}`)}`);
             };
             return updateBodies;
         }
