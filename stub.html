@@ -125,7 +125,7 @@ tr.total {
             <tr>
                 <td>Opstart</td>
                 <td></td>
-                <td class="sub">320</td>
+                <td class="sub">300</td>
                 <td></td>
             </tr>
         </tbody>
@@ -194,7 +194,7 @@ tr.total {
         };
         function setPrice(node) {
             const d = diagValue(node);
-            const price = d * d * 5;
+            const price = d * d * .1;
             subNode(node).textContent = textMoney(price);
         };
         function priceEstimateNode() {
