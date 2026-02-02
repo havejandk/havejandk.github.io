@@ -84,6 +84,19 @@ tr.total {
     float: right;
     margin: .5em;
 }
+body.share-unsupported .share {
+    display: none;
+}
+*.li-buttons > li > * {
+    display: inline-block;
+    padding: .5em;
+    border-radius: .5em;
+    margin: .2em 0em;
+    border: 1px solid black;
+    text-decoration: none;
+    background: #00FF0010;
+    cursor: pointer;
+}
 
   </style>
 
@@ -140,9 +153,9 @@ tr.total {
                 <li>Mål dine stubbe</li>
                 <li>Tilføj stubbe ved at trykke "+" og taste målene</li>
                 <li>Kontakt Havejan, enten med:
-                    <ul>
+                    <ul class="li-buttons">
                         <li><a href="sms:+4528144464" id="sms">💬 Send SMS til 28 14 44 64</a></li>
-                        <li><a onclick="share(this)" href="share">
+                        <li class="share"><button onclick="share(this)">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="18" cy="5" r="3"></circle>
   <circle cx="6" cy="12" r="3"></circle>
@@ -150,7 +163,7 @@ tr.total {
   <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
   <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
 </svg>
-Del fra din mobil til
+Del via Web Share
 </a>
                         </li>
                         <li><a href="tel:+4528144464">📞Ring 28 14 44 64</a></li>
@@ -226,12 +239,29 @@ Del fra din mobil til
         };
         function calculateBody() {
             const stubs = [...document.querySelectorAll(".diag")];
+            const count = stubs.length;
             const diagList = stubs
                 .map(x => `${x.value}cm`)
                 .reduce((acc, val) => `${acc}\n${val}`);
-            const count = stubs.length;
-            const msg = `Subfræsning: #${count}\n${diagList}`;
+            const msg = `Stubfræsning: #${count}\n${diagList}`;
             return msg;
+        }
+        async function share(node) {
+            const stubs = [...document.querySelectorAll(".diag")];
+            const count = stubs.length;
+            const diagList = stubs
+                .map(x => `${x.value}cm`)
+                .reduce((acc, val) => `${acc}\n${val}`);
+            const shareData = {
+                title: `Stubfræsning af ${count} stubbe`,
+                text: `Hej Havejan. Jeg har ${count} stubbe jeg gerne vil have fræset. Jeg har selv målt dem til: ${diagList}`
+            };
+            try {
+                await navigator.share(shareData);
+            } catch(err) {
+                console.log("failed share");
+            }
+
         }
         function updateBody(node, encodedText) {
             node.setAttribute('href', encodedText);
@@ -312,7 +342,12 @@ Del fra din mobil til
             document.getElementById("total").textContent = textMoney(total);
             updateBodies();
         };
+        function init_share() {
+            if (!navigator.share)
+                document.querySelector("body").classList.add("share-unsupported");
+        }
         function init() {
+            init_share();
             init_updateListener();
             addStump();
         };
