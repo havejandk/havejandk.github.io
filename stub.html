@@ -248,10 +248,11 @@ Del via Web Share
             const diagList = stubs
                 .map(x => `${x.value}cm`)
                 .reduce((acc, val) => `${acc}\n${val}`);
+            const word_stubbe = count == 1 ? 'stub' : 'stubbe';
             const msg = {
-                'subject': `Stubfraesning af ${count} stubbe`,
+                'subject': `Stubfraesning af ${count} ${word_stubbe}`,
                 'shortBody': diagList,
-                'body': `Hej Havejan, Jeg vil gerne kontaktes om ${count} stubbe:\n${diagList}`
+                'body': `Hej Havejan, Jeg vil gerne kontaktes om ${count} ${word_stubbe}:\n${diagList}`
             };
             return msg;
         };
