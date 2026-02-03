@@ -42,6 +42,65 @@ ul.card { margin: 0px; padding: .5em; text-align: left;
 .pagelinks a:visited { text-decoration: none }
 
 
+
+ul.icon {
+    list-style: none;
+    padding 0;
+}
+ul.icon > li {
+    margin-bottom: -.5em;
+}
+ul.icon > li > a
+{
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    align-items: center;
+    text-decoration: none;
+    
+}
+ul.icon > li > a > span.icon,
+ul.icon > li > a > span.icon
+{
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.a-buttons a {
+    box-shadow: 1px 2px 3px 4px rgba(0,0,0,.15);
+    margin: 1em 0em;
+    border-radius: 4px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+table:has(#price_estimate) {
+    width: 100%;
+    border-collapse: collapse;
+}
+table:has(#price_estimate) tr th,
+table:has(#price_estimate) tr td{
+    border-bottom: 2px solid #00000050;
+}
+tr.total {
+    padding: 5px;
+    margin: 10px;
+    background: #00FF0010;
+}
+tr.total {
+    font-weight: bold;
+}
+#price_estimate > .total {
+    border-bottom: 5px double black;
+}
+#price_estimate tr td:nth-child(1) {
+    text-align: left;
+}
+#price_estimate tr td {
+    text-align: right;
+}
 /*
   brun:
   341a0c
@@ -49,7 +108,7 @@ ul.card { margin: 0px; padding: .5em; text-align: left;
   c88443
   c8b5a6
 
-  grøn:
+  grï¿½n:
   164e14
   04b604
   90b690
@@ -202,3 +261,30 @@ word-wrap: break-word; /* Internet Explorer 5.5+ */
 
 hr { clear: both; }
 
+div.staticimages {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.staticimages img,
+div.staticimages svg
+{
+    flex: 0 1 auto;
+    max-width: 20em;
+    height: auto;
+    min-width: 0;
+    margin: .5em;
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.5), 
+        0 2px 4px -1px rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+div.staticimages img:hover,
+div.staticimages svg:hover {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 0px;
+}
