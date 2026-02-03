@@ -90,15 +90,28 @@ tr.total {
 body.share-unsupported .share {
     display: none;
 }
-*.li-buttons > li > * {
-    display: inline-block;
-    padding: .5em;
-    border-radius: .5em;
-    margin: .2em 0em;
-    border: 1px solid black;
+ul.icon {
+    list-style: none;
+    padding: 0;
+}
+ul.icon > li {
+    margin-bottom: -.5em;
+}
+ul.icon > li > a
+{
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    align-items: center;
     text-decoration: none;
-    background: #00FF0010;
-    cursor: pointer;
+    padding: .1em 0em;
+    border-radius: 4px;
+}
+ul.icon > li > a > span.icon,
+ul.icon > li > a > span.icon
+{
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
 }
 
   </style>
@@ -123,6 +136,7 @@ body.share-unsupported .share {
     </template>
 
     <div>
+        <img src="img/stump_70cm.jpg" class="wrap-right" style="max-width: 15em; height: auto;" />
         <div class="padbox" style="min-width: 40%;">
             <table style="max-width: 25em;">
                 <thead>
@@ -152,15 +166,15 @@ body.share-unsupported .share {
         </div>
         <div style="max-width: 50em;">
             <ol>
-                <img src="img/stump_70cm.jpg" class="wrap-right" style="max-width: 15em; height: auto;" />
                 <li>Mål dine stubbe</li>
                 <li>Tilføj stubbe ved at trykke "+" og taste målene</li>
                 <li>Kontakt Havejan, enten med:
-                    <ul class="li-buttons">
-                        <li><a href="mailto:jan@havejan.dk" id="stub-email">Email til jan@havejan.dk</a></li>
-                        <li><a href="sms:+4528144464" id="stub-sms">💬 Send SMS til 28 14 44 64</a></li>
-                        <li><a href="tel:+4528144464">📞Ring 28 14 44 64</a></li>
-                        <li class="share"><button onclick="share(this)">
+                    <ul class="li-buttons icon">
+                        <li><a href="mailto:jan@havejan.dk" id="stub-email"><span class="icon">✉</span>Email til jan@havejan.dk</a></li>
+                        <li><a href="sms:+4528144464" id="stub-sms"><span class="icon">💬</span>Send SMS til 28 14 44 64</a></li>
+                        <li><a href="tel:+4528144464"><span class="icon">📞</span>Ring 28 14 44 64</a></li>
+                        <li class="share"><a onclick="share(this)">
+                            <span class="icon">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="18" cy="5" r="3"></circle>
   <circle cx="6" cy="12" r="3"></circle>
@@ -168,6 +182,7 @@ body.share-unsupported .share {
   <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
   <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
 </svg>
+</span>
 Del via Web Share
 </a>
                         </li>
@@ -251,7 +266,6 @@ Del via Web Share
             const word_stubbe = count == 1 ? 'stub' : 'stubbe';
             const msg = {
                 'subject': `Stubfraesning af ${count} ${word_stubbe}`,
-                'shortBody': diagList,
                 'body': `Hej Havejan, Jeg vil gerne kontaktes om ${count} ${word_stubbe}:\n${diagList}`
             };
             return msg;
@@ -276,7 +290,7 @@ Del via Web Share
             function updateBodies() {
                 msg = calculateMessage();
                 emailNode.setAttribute('href', `mailto:${email}?subject=${encodeURIComponent(msg.subject)}&body=${encodeURIComponent(msg.body)}`);
-                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}body=${encodeURIComponent(`${msg.subject}: ${msg.shortBody}`)}`);
+                smsNode.setAttribute('href', `sms:${phoneNumber}${separator}body=${encodeURIComponent(`${msg.subject}: ${msg.body}`)}`);
             };
             return updateBodies;
         }
