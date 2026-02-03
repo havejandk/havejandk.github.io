@@ -44,14 +44,14 @@
 
 <div id="top">
 <h1>Stubfræsning</h1>
-    <p>Kontakt Havejan for aftale om stubfræsning. Du kan lave dit eget overslag her.</p>
+    <p>Kontakt Havejan for aftale om stubfræsning. Du kan lave dit eget overslag her. Mindstepris er kr. 675.-</p>
     <template id="stump_template">
         <tr>
             <td style="flex: 1 0 auto; min-width: 5em;">🪵Stub</td>
             <td class="nowrap" style="flex: 1 0 auto; min-width: 7em;">
-                <button onclick="diag_change(this, -1)">-</button>
+                <button onclick="diag_change(this, -5)">-</button>
                 <input type="number" value="10" min="10" max="150" step="5" class="diag" style="width: 3em;" name="stub" />
-                <button onclick="diag_change(this, 1)">+</button>
+                <button onclick="diag_change(this, 5)">+</button>
             </td>
             <td class="stump sub" style="min-width: 6em; max-width: 8em;"></td>
             <td style="width: 2em;"><button onclick="removeStump(this)" >🗙</button></td>
@@ -129,6 +129,7 @@ Del via Web Share (find selv jan@havejan.dk, eller 28 14 44 64)
         const min_diag = 10;
         const phoneNumber = "+4528144464";
         const email = 'jan@havejan.dk';
+        const maxPris = 675;
 
         function makeParseFloatLocal(locale = undefined) {
             const formatter = Intl.NumberFormat(locale);
@@ -286,9 +287,12 @@ Del via Web Share (find selv jan@havejan.dk, eller 28 14 44 64)
             return stump_diags.forEach(node => setPrice(node.closest("tr")))
         }
         function updateTotal() {
-            const total = [...document.querySelectorAll('.sub')]
+            var total = [...document.querySelectorAll('.sub')]
                         .map(el => parseFloatLocal(el.textContent) )
                         .reduce((acc, val) => acc + val, 0);
+            if (total < maxPris) {
+                total = maxPris;
+            }
             document.getElementById("total").textContent = textMoney(total);
             updateBodies();
         };
