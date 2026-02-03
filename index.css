@@ -264,6 +264,7 @@ hr { clear: both; }
 div.staticimages {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 div.staticimages img,
