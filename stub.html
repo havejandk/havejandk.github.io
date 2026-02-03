@@ -33,7 +33,9 @@ a {
   padding: 0.5em 1em;
   touch-action: manipulation; /* better mobile feel */
 }
-
+.hidden {
+    visibility: hidden;
+}
 button {
     min-width: 1.5em;
 }
@@ -172,8 +174,8 @@ ul.icon > li > a > span.icon
                     <ul class="li-buttons icon">
                         <li><a href="mailto:jan@havejan.dk" id="stub-email"><span class="icon">✉</span>Email til jan@havejan.dk</a></li>
                         <li><a href="sms:+4528144464" id="stub-sms"><span class="icon">💬</span>Send SMS til 28 14 44 64</a></li>
-                        <li><a href="tel:+4528144464"><span class="icon">📞</span>Ring 28 14 44 64</a></li>
-                        <li class="share"><a onclick="share(this)">
+                        <li><a href="tel:+4528144464"><span class="icon">📞</span>Ring 28 14 44 64 og fortæl målene</a></li>
+                        <li class="share hidden"><a onclick="share(this)">
                             <span class="icon">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <circle cx="18" cy="5" r="3"></circle>
@@ -183,7 +185,7 @@ ul.icon > li > a > span.icon
   <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
 </svg>
 </span>
-Del via Web Share
+Del via Web Share (find selv jan@havejan.dk, eller 28 14 44 64)
 </a>
                         </li>
                     </ul>
